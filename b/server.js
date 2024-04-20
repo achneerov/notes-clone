@@ -9,6 +9,7 @@ const PORT = 3000;
 app.use(bodyParser.json());
 app.use(cors()); // Use the CORS middleware for all routes
 
+
 // Dummy user data (replace with actual authentication logic)
 const users = [
     { id: 1, username: 'user1', password: 'password1' },

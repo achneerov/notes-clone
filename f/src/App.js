@@ -1,20 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import LandingPage from './pages/LandingPage';
 import SignInPage from './pages/SignInPage';
 import NotesPage from './pages/NotesPage';
 
+
+
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Token exists, user is authenticated
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   const handleSignIn = () => {
     setIsAuthenticated(true);
   };
 
   const handleSignOut = () => {
+    localStorage.removeItem('token'); // Clear token from localStorage
     setIsAuthenticated(false);
-    // You can add logic here to clear any authentication tokens or data
   };
 
   return (

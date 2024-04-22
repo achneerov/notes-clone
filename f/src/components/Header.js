@@ -1,10 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Header = ({ authenticated, setAuthenticated }) => {
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setAuthenticated(false);
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const request = { token }; // Create the request object
+      console.log('Logout Request:', request); // Log the request object
+      await axios.post('http://localhost:4000/api/logout', request); // Send token in req.body
+      localStorage.removeItem('token');
+      setAuthenticated(false);
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   let buttonContent;

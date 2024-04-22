@@ -36,6 +36,7 @@ router.post('/login', (req, res) => {
 // Logout endpoint
 router.post('/logout', (req, res) => {
     const { token } = req.body;
+    console.log('Token:', token)
 
     // Convert token to username
     const username = getTokenUsername(token);

@@ -1,48 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
-import LandingPage from './pages/LandingPage';
-import SignInPage from './pages/SignInPage';
-import NotesPage from './pages/NotesPage';
+import Main from './components/Main';
+import SignInPage from './components/SignInPage'; // Import your SigninPage component
 
-
-
-const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+function App() {
+  const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      // Token exists, user is authenticated
-      setIsAuthenticated(true);
+      setAuthenticated(true);
     }
   }, []);
 
-  const handleSignIn = () => {
-    setIsAuthenticated(true);
-  };
-
-  const handleSignOut = () => {
-    localStorage.removeItem('token'); // Clear token from localStorage
-    setIsAuthenticated(false);
-  };
-
   return (
     <Router>
-      <Header isAuthenticated={isAuthenticated} handleSignOut={handleSignOut} />
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route
-          path="/signin"
-          element={<SignInPage handleSignIn={handleSignIn} />}
-        />
-        <Route
-          path="/notes"
-          element={isAuthenticated ? <NotesPage /> : <SignInPage />}
-        />
-      </Routes>
+      <div className="App">
+        <Header authenticated={authenticated} setAuthenticated={setAuthenticated} />
+        <Routes>
+        <Route path="/signin" element={<SignInPage setAuthenticated={setAuthenticated} />}/>
+        <Route path="/" element={<Main />} />
+        </Routes>
+      </div>
     </Router>
   );
-};
+}
 
 export default App;

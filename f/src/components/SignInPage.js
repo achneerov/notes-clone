@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import axios from 'axios';
 
 const SignInPage = ({ setAuthenticated }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleLogin = async () => {
     try {
@@ -13,7 +15,8 @@ const SignInPage = ({ setAuthenticated }) => {
       });
       const { token } = response.data;
       localStorage.setItem('token', token);
-      setAuthenticated(true); // Call setAuthenticated from props
+      setAuthenticated(true);
+      navigate('/'); // Redirect to the "/" route after successful login
     } catch (error) {
       console.error('Login error:', error);
     }

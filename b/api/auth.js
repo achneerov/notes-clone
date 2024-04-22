@@ -5,7 +5,6 @@ const sqlite3 = require('sqlite3').verbose();
 const router = express.Router();
 const db = new sqlite3.Database('../general.db'); // Connect to your SQLite database
 
-// Login endpoint
 router.post('/login', (req, res) => {
     const { username, password } = req.body;
     
@@ -15,6 +14,13 @@ router.post('/login', (req, res) => {
             console.error(err);
             res.status(500).json({ message: 'Internal server error' });
         } else if (row) {
+            // Delete existing sessions
+            db.run('DELETE FROM sessions WHERE user_id = ?', [row.id], err => {
+                if (err) {
+                    console.error(err);
+                    res.status(500).json({ message: 'Internal server error' });
+                }
+            });
             // Generate token
             const token = jwt.sign({ username: row.username }, 'secret_key');
             
@@ -33,68 +39,22 @@ router.post('/login', (req, res) => {
     });
 });
 
-// Logout endpoint
 router.post('/logout', (req, res) => {
     const { token } = req.body;
-    console.log('Token:', token)
+    console.log('Token:', token);
 
-    // Convert token to username
-    const username = getTokenUsername(token);
-
-    if (!username) {
-        return res.status(400).json({ message: 'Invalid token' });
-    }
-
-    // Remove all sessions for the specified user
-    db.run('DELETE FROM sessions WHERE user_id = (SELECT id FROM users WHERE username = ?)', [username], function(err) {
+    // Delete rows with matching token
+    db.run('DELETE FROM sessions WHERE session_token = ?', [token], function(err) {
         if (err) {
-            console.error(err);
-            res.status(500).json({ message: 'Internal server error' });
-        } else if (this.changes === 0) {
-            res.status(404).json({ message: 'No active sessions found for this user' });
+            console.error('Error deleting sessions:', err.message);
+            res.status(500).send('Error logging out');
         } else {
-            res.json({ message: 'Logout successful' });
+            console.log(`Deleted ${this.changes} session(s) with token: ${token}`);
+            res.status(200).send('Logged out successfully');
         }
     });
 });
 
-// Function to get username from token
-function getTokenUsername(token) {
-    // Query the sessions table to find the user_id associated with the token
-    const sessionQuery = 'SELECT user_id FROM sessions WHERE session_token = ?';
-
-    db.get(sessionQuery, [token], (err, row) => {
-        if (err) {
-            console.error('Error querying sessions table:', err);
-            return null;
-        }
-
-        if (!row) {
-            console.error('Token not found in sessions table');
-            return null;
-        }
-
-        const userId = row.user_id;
-
-        // Query the users table to fetch the username based on user_id
-        const userQuery = 'SELECT username FROM users WHERE id = ?';
-
-        db.get(userQuery, [userId], (err, userRow) => {
-            if (err) {
-                console.error('Error querying users table:', err);
-                return null;
-            }
-
-            if (!userRow) {
-                console.error('User not found in users table');
-                return null;
-            }
-
-            const username = userRow.username;
-            return username;
-        });
-    });
-}
 
 
 

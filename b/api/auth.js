@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const sqlite3 = require('sqlite3').verbose();
 
 const router = express.Router();
-const db = new sqlite3.Database('../general.db'); // Connect to your SQLite database
+const db = new sqlite3.Database('../db/general.db'); // Connect to your SQLite database
 
 router.post('/login', (req, res) => {
     const { username, password } = req.body;

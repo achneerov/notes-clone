@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const authRoutes = require('./api/auth'); // Assuming this is your existing authRoutes file
-const notesRoutes = require('./path/to/notesRoutes'); // Import your new notesRoutes file
+const notesRoutes = require('./api/notes'); // Import your new notesRoutes file
 
 const app = express();
 const PORT = 4000;

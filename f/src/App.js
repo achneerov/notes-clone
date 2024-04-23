@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Main from './components/Main';
 import SignInPage from './components/SignInPage'; // Import your SigninPage component
+import NotesPage from './components/NotesPage'; // Import your SigninPage component
+
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -19,8 +21,9 @@ function App() {
       <div className="App">
         <Header authenticated={authenticated} setAuthenticated={setAuthenticated} />
         <Routes>
-        <Route path="/signin" element={<SignInPage setAuthenticated={setAuthenticated} />}/>
         <Route path="/" element={<Main />} />
+        <Route path="/signin" element={<SignInPage setAuthenticated={setAuthenticated} />}/>
+        <Route path="/notes" element={<NotesPage />} />
         </Routes>
       </div>
     </Router>

@@ -16,8 +16,6 @@ function jwt_to_userid(token, callback) {
     });
 }
 
-
-
 function jwt_to_username(token, callback) {
     jwt_to_userid(token, (err, userid) => {
         if (err) {

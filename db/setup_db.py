@@ -41,6 +41,8 @@ cursor.execute("INSERT INTO users (username, password) VALUES ('user2', 'passwor
 # Insert sample notes data
 cursor.execute("INSERT INTO notes (user_id, note) VALUES (1, 'This is a note for user1')")
 cursor.execute("INSERT INTO notes (user_id, note) VALUES (2, 'This is a note for user2')")
+cursor.execute("INSERT INTO notes (user_id, note) VALUES (1, 'This is another note for user1')")
+
 
 # Commit changes and close the connection
 conn.commit()

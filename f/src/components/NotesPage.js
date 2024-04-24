@@ -4,7 +4,6 @@ const NotesPage = () => {
     const [notes, setNotes] = useState([]);
 
     useEffect(() => {
-        // Fetch user notes when the component mounts
         fetchNotes();
     }, []);
 

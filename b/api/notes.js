@@ -1,8 +1,11 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
+const jwt = require('jsonwebtoken');
+const { jwt_to_userid, jwt_to_username } = require('./jwt_convert');
+
 
 const router = express.Router();
-const db = new sqlite3.Database('../db/general.db'); // Connect to your SQLite database
+const db = new sqlite3.Database('../db/general.db');
 
 router.post('/getnotes', (req, res) => {
     const token = req.body.token;
@@ -11,16 +14,10 @@ router.post('/getnotes', (req, res) => {
         return res.status(401).json({ message: 'Token not provided' });
     }
 
-    db.get('SELECT user_id FROM sessions WHERE session_token = ?', [token], (err, row) => {
+    jwt_to_userid(token, (err, user_id) => {
         if (err) {
-            return res.status(500).json({ message: 'Internal server error' });
+            return res.status(401).json({ message: err.message });
         }
-
-        if (!row) {
-            return res.status(401).json({ message: 'Invalid token' });
-        }
-
-        const user_id = row.user_id;
 
         db.all('SELECT * FROM notes WHERE user_id = ?', [user_id], (err, rows) => {
             if (err) {
@@ -31,6 +28,4 @@ router.post('/getnotes', (req, res) => {
         });
     });
 });
-
-
 module.exports = router;

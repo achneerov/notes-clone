@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate from react
 import axios from 'axios';
 
 const SignInPage = ({ setAuthenticated }) => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate(); // Initialize useNavigate
 
   const handleLogin = async () => {
     try {
       const response = await axios.post('http://localhost:4000/api/login', {
-        username,
+        email,
         password,
       });
       const { token } = response.data;
@@ -26,12 +26,12 @@ const SignInPage = ({ setAuthenticated }) => {
     <div className="signinpage">
       <h2>Sign In</h2>
       <div>
-        <label htmlFor="username">Username:</label>
+        <label htmlFor="email">Email:</label>
         <input
           type="text"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </div>
       <div>

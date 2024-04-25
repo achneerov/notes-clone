@@ -6,10 +6,10 @@ const router = express.Router();
 const db = new sqlite3.Database('../db/general.db'); // Connect to your SQLite database
 
 router.post('/login', (req, res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     
     // Check username and password
-    db.get('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], (err, row) => {
+    db.get('SELECT * FROM users WHERE email = ? AND password = ?', [email, password], (err, row) => {
         if (err) {
             console.error(err);
             res.status(500).json({ message: 'Internal server error' });
@@ -22,7 +22,7 @@ router.post('/login', (req, res) => {
                 }
             });
             // Generate token
-            const token = jwt.sign({ username: row.username }, 'secret_key');
+            const token = jwt.sign({ email: row.email }, 'secret_key');
             
             // Add token to sessions table
             db.run('INSERT INTO sessions (user_id, session_token) VALUES (?, ?)', [row.id, token], err => {

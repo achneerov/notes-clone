@@ -16,13 +16,13 @@ function jwt_to_userid(token, callback) {
     });
 }
 
-function jwt_to_username(token, callback) {
+function jwt_to_email(token, callback) {
     jwt_to_userid(token, (err, userid) => {
         if (err) {
             return callback(err, null);
         }
 
-        db.get('SELECT username FROM users WHERE id = ?', [userid], (err, row) => {
+        db.get('SELECT email FROM users WHERE id = ?', [userid], (err, row) => {
             if (err) {
                 return callback(err, null);
             }
@@ -32,4 +32,4 @@ function jwt_to_username(token, callback) {
     });
 }
 
-module.exports = { jwt_to_userid, jwt_to_username };
+module.exports = { jwt_to_userid, jwt_to_email };

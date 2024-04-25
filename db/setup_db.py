@@ -36,7 +36,7 @@ cursor.execute('''
 
 # Insert sample data into the users table
 cursor.execute("INSERT INTO users (email, password) VALUES ('user1@gmail.com', 'password1')")
-cursor.execute("INSERT INTO users (emaile, password) VALUES ('user2@gmail.com', 'password2')")
+cursor.execute("INSERT INTO users (email, password) VALUES ('user2@gmail.com', 'password2')")
 
 # Insert sample notes data
 cursor.execute("INSERT INTO notes (user_id, note) VALUES (1, 'This is a note for user1')")

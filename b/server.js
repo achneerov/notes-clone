@@ -5,6 +5,8 @@ const cors = require('cors');
 
 const authRoutes = require('./api/auth'); // Assuming this is your existing authRoutes file
 const notesRoutes = require('./api/notes'); // Import your new notesRoutes file
+const profileRoutes = require('./api/profile'); // Import your new notesRoutes file
+
 
 const app = express();
 const PORT = 4000;
@@ -17,6 +19,9 @@ app.use('/api', authRoutes);
 
 // Use the notes routes from the notesRoutes module
 app.use('/api', notesRoutes);
+
+app.use('/api', profileRoutes);
+
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

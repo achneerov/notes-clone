@@ -1,7 +1,7 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const jwt = require('jsonwebtoken');
-const { jwt_to_userid, jwt_to_username } = require('./jwt_convert');
+const { jwt_to_userid } = require('./jwt_convert');
 
 
 const router = express.Router();

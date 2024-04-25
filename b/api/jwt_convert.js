@@ -27,7 +27,7 @@ function jwt_to_email(token, callback) {
                 return callback(err, null);
             }
 
-            callback(null, row.username);
+            callback(null, row.email);
         });
     });
 }

@@ -19,21 +19,21 @@ const Header = ({ authenticated, setAuthenticated }) => {
   let buttonContent;
   if (authenticated) {
     buttonContent = (
-      <button onClick={handleLogout}>Logout</button>
+      <li><button onClick={handleLogout}>Logout</button></li>
     );
-  }
-  else {
+  } else {
     buttonContent = (
-      <Link to="/signin">Login</Link>
+      <li><Link to="/signin">Login</Link></li>
     );
   }
 
   return (
-    <div className="header">
-      <a href="/">Home</a>
-      {authenticated && <a href="/notes">Notes</a>}
+    <ul className="header">
+      <li><a href="/">Home</a></li>
+      <li><a href="/profile">Profile</a></li>
+      {authenticated && <li><a href="/notes">Notes</a></li>}
       {buttonContent}
-    </div>
+    </ul>
   );
 };
 

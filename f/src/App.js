@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Main from './components/Main';
 import SignInPage from './components/SignInPage'; // Import your SigninPage component
 import NotesPage from './components/NotesPage'; // Import your SigninPage component
+import ProfilePage from './components/ProfilePage'; // Import the ProfilePage component
 
 
 function App() {
@@ -24,6 +25,8 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/signin" element={<SignInPage setAuthenticated={setAuthenticated} />}/>
         <Route path="/notes" element={<NotesPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+
         </Routes>
       </div>
     </Router>

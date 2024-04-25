@@ -11,7 +11,7 @@ cursor = conn.cursor()
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT UNIQUE,
+        email TEXT UNIQUE,
         password TEXT
     );
 ''')
@@ -35,8 +35,8 @@ cursor.execute('''
 ''')
 
 # Insert sample data into the users table
-cursor.execute("INSERT INTO users (username, password) VALUES ('user1', 'password1')")
-cursor.execute("INSERT INTO users (username, password) VALUES ('user2', 'password2')")
+cursor.execute("INSERT INTO users (email, password) VALUES ('user1@gmail.com', 'password1')")
+cursor.execute("INSERT INTO users (emaile, password) VALUES ('user2@gmail.com', 'password2')")
 
 # Insert sample notes data
 cursor.execute("INSERT INTO notes (user_id, note) VALUES (1, 'This is a note for user1')")

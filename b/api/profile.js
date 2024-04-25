@@ -16,7 +16,6 @@ router.post('/getemail', (req, res) => {
     });
 });
 
-
 router.post('/getpassword', (req, res) => {
     const token = req.body.token;
     jwt_to_userid(token, (err, user_id) => {
@@ -30,10 +29,42 @@ router.post('/getpassword', (req, res) => {
             res.status(200).json({ password: row.password });
         });
     });
-
-
 });
 
+router.post('/setemail', (req, res) => {
+    const token = req.body.token;
+    const newEmail = req.body.email;
 
+    jwt_to_userid(token, (err, user_id) => {
+        if (err) {
+            return res.status(401).json({ message: err.message });
+        }
+
+        db.run('UPDATE users SET email = ? WHERE id = ?', [newEmail, user_id], function(err) {
+            if (err) {
+                return res.status(500).json({ message: 'Internal server error' });
+            }
+            res.status(200).json({ message: 'Email updated successfully' });
+        });
+    });
+});
+
+router.post('/setpassword', (req, res) => {
+    const token = req.body.token;
+    const newPassword = req.body.password;
+
+    jwt_to_userid(token, (err, user_id) => {
+        if (err) {
+            return res.status(401).json({ message: err.message });
+        }
+
+        db.run('UPDATE users SET password = ? WHERE id = ?', [newPassword, user_id], function(err) {
+            if (err) {
+                return res.status(500).json({ message: 'Internal server error' });
+            }
+            res.status(200).json({ message: 'Password updated successfully' });
+        });
+    });
+});
 
 module.exports = router;

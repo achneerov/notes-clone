@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  template: `
+    <h1>Welcome to My Angular App!</h1>
+    <p>This is the root component.</p>
+  `,
+  styles: []
 })
-export class AppComponent {
-  title = 'f-angular';
-}
+export class AppComponent { }
